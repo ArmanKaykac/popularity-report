@@ -1,11 +1,13 @@
 package com.popularity.report.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -15,7 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageData {
+public class ImageData implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +31,7 @@ public class ImageData {
     @Column(name = "imagedata", length = 1000)
     private byte[] imageData;
 
+    @JsonIgnore
     @OneToMany(mappedBy="imageData")
     private List<Vote> votes;
 }
