@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -27,4 +28,7 @@ public class ImageData {
     @Lob
     @Column(name = "imagedata", length = 1000)
     private byte[] imageData;
+
+    @OneToMany(mappedBy="imageData")
+    private List<Vote> votes;
 }
