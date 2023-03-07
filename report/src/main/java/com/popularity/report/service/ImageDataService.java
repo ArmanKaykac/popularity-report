@@ -9,7 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class ImageDataService {
@@ -45,6 +47,23 @@ public class ImageDataService {
         Optional<ImageData> dbImage = imageDataRepository.findByName(name);
         byte[] image = ImageUtil.decompressImage(dbImage.get().getImageData());
         return image;
+    }
+
+
+    @Transactional
+    public List<ImageData> getRandomImages(){
+        List<ImageData> imageDataList = imageDataRepository.getRandomImages();
+        List<ImageData> response = new ArrayList<>();
+
+        for (ImageData imageData : imageDataList) {
+           ImageData image =  ImageData.builder()
+                   .name(imageData.getName())
+                   .type(imageData.getType())
+                   .imageData(ImageUtil.decompressImage(imageData.getImageData())).build();
+            response.add(image);
+        }
+
+        return response;
     }
 
 

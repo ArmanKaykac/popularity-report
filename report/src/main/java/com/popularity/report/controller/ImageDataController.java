@@ -43,5 +43,12 @@ public class ImageDataController {
                 .body(image);
     }
 
+    @GetMapping("/getRandomImages")
+    public Object getRandomImages(){
+        Object response = imageDataService.getRandomImages();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(response);
+    }
+
 
 }
